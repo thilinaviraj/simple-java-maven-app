@@ -1,10 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('') {
+    stage('error') {
       steps {
-        sh '''cd jenkins
-sh Jenkinsfile'''
+        sh 'npm install'
       }
     }
 

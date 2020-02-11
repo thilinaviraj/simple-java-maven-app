@@ -1,5 +1,11 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'maven:3-alpine'
+      args '-v /root/.m2:/root/.m2'
+    }
+
+  }
   stages {
     stage('Build') {
       agent {
@@ -10,10 +16,7 @@ pipeline {
 
       }
       steps {
-        sh '''sh \'mvn clean install\'
-def pom = readMavenPom file:\'pom.xml\'
-            print pom.version
-            env.version = pom.version'''
+        sh 'mvn -B -DskipTests clean package'
       }
     }
 

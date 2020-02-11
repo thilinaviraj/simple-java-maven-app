@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('error') {
+    stage('Build') {
       agent {
         docker {
           image 'maven:3-alpine'
@@ -10,7 +10,10 @@ pipeline {
 
       }
       steps {
-        sh 'npm install'
+        sh '''sh \'mvn clean install\'
+def pom = readMavenPom file:\'pom.xml\'
+            print pom.version
+            env.version = pom.version'''
       }
     }
 
